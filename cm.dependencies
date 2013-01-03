@@ -3,5 +3,9 @@
    "repository": "lge-kernel-pecan",
    "target_path": "kernel/lge/p350",
    "branch": "ics"
+ } {
+   "repository": "cm_vendor_lge",
+   "target_path": "vendor/lge",
+   "branch": "ics"
  }
 ]
