@@ -1,4 +1,4 @@
-# RILD
+#ril
 rild.libpath=/system/lib/libril-qc-1.so
 rild.libargs=-d /dev/smd0
 persist.rild.nitz_plmn=
