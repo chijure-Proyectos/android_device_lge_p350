@@ -56,4 +56,4 @@ If you want to update your build, you have to do only this:
 - cd CM9
 - repo sync -j16
 
-and build again :D
+and build again and test it
