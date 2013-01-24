@@ -39,36 +39,9 @@
 
 #define LOGV LOGI
 
-struct qcom_mdp_rect {
-   uint32_t x;
-   uint32_t y;
-   uint32_t w;
-   uint32_t h;
-};
-
-struct qcom_mdp_img {
-   uint32_t width;
-   int32_t  height;
-   int32_t  format;
-   int32_t  offset;
-   int      memory_id; /* The file descriptor */
-   uint32_t priv; // CONFIG_ANDROID_PMEM
-};
-
-struct qcom_mdp_blit_req {
-   struct   qcom_mdp_img src;
-   struct   qcom_mdp_img dst;
-   struct   qcom_mdp_rect src_rect;
-   struct   qcom_mdp_rect dst_rect;
-   uint32_t alpha;
-   uint32_t transp_mask;
-   uint32_t flags;
-   int sharpening_strength;  /* -127 <--> 127, default 64 */
-};
-
 struct blitreq {
    unsigned int count;
-   struct qcom_mdp_blit_req req;
+   struct mdp_blit_req req;
 };
 
 /* Prototypes and extern functions. */
@@ -449,35 +422,30 @@ CameraHAL_FixupParams(android::CameraParameters &settings)
 // FIXME TODO
 
    const char *preview_sizes =
-      "640x480,576x432,480x320,384x288,352x288,320x240,240x160,176x144";
+      "2952x1944,2560x1920,2048x1536,1920x1080,1600x1200,1208x768,1280x720,800x480,768x432,720x480,640x480,576x432,480x320,384x288,352x288,320x240,240x160,176x144";
    const char *video_sizes =
-      "640x480,352x288,320x240,176x144";
-   const char *preferred_size       = "320x240";
-   const char *preview_frame_rates  = "10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25";
+      "1280x720,800x480,720x480,640x480,352x288,320x240,176x144";
+   const char *preferred_size       = "480x320";
+   const char *preview_frame_rates  = "30,27,24,15";
    const char *preferred_frame_rate = "15";
-   const char *frame_rate_range     = "(10,25)";
-   const char *preferred_horizontal_viewing_angle = "51.2";
-   const char *preferred_vertical_viewing_angle = "39.4";
+   const char *frame_rate_range     = "(15,30)";
 
    settings.set(android::CameraParameters::KEY_VIDEO_FRAME_FORMAT,
                 android::CameraParameters::PIXEL_FORMAT_YUV420SP);
 
-
+#if 0
    if (!settings.get(android::CameraParameters::KEY_SUPPORTED_PREVIEW_SIZES)) {
       settings.set(android::CameraParameters::KEY_SUPPORTED_PREVIEW_SIZES,
                    preview_sizes);
    }
-#if 0
+
    if (!settings.get(android::CameraParameters::KEY_SUPPORTED_VIDEO_SIZES)) {
       settings.set(android::CameraParameters::KEY_SUPPORTED_VIDEO_SIZES,
                    video_sizes);
    }
-#endif
+
    if (!settings.get(android::CameraParameters::KEY_VIDEO_SIZE)) {
-	settings.set("record-size", preferred_size);
       settings.set(android::CameraParameters::KEY_VIDEO_SIZE, preferred_size);
-   } else {
-	settings.set("record-size", settings.get(android::CameraParameters::KEY_VIDEO_SIZE));
    }
 
    if (!settings.get(android::CameraParameters::KEY_PREFERRED_PREVIEW_SIZE_FOR_VIDEO)) {
@@ -500,15 +468,7 @@ CameraHAL_FixupParams(android::CameraParameters &settings)
       settings.set(android::CameraParameters::KEY_SUPPORTED_PREVIEW_FPS_RANGE,
                    frame_rate_range);
    }
-   if (!settings.get(android::CameraParameters::KEY_HORIZONTAL_VIEW_ANGLE)) {
-	settings.set(android::CameraParameters::KEY_HORIZONTAL_VIEW_ANGLE,
-		preferred_horizontal_viewing_angle);
-   }
-
-   if (!settings.get(android::CameraParameters::KEY_VERTICAL_VIEW_ANGLE)) {
-	settings.set(android::CameraParameters::KEY_VERTICAL_VIEW_ANGLE,
-		preferred_vertical_viewing_angle);
-   }
+#endif
 }
 
 /* Hardware Camera interface handlers. */
@@ -780,9 +740,6 @@ camera_device_close(hw_device_t* device)
    return rc;
 }
 
-void sighandle(int s){
-	//abort()
-}
 
 int
 qcamera_device_open(const hw_module_t* module, const char* name, 
@@ -791,7 +748,6 @@ qcamera_device_open(const hw_module_t* module, const char* name,
 
    void *libcameraHandle;
    int cameraId = atoi(name);
-   signal(SIGFPE,(*sighandle));
 
    LOGD("qcamera_device_open: name:%s device:%p cameraId:%d\n", 
         name, device, cameraId);
@@ -860,5 +816,4 @@ qcamera_device_open(const hw_module_t* module, const char* name,
    *device = &camera_device->common;
    return NO_ERROR;
 }
-
 
