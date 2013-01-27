@@ -1,4 +1,3 @@
-========================
 PecanCM Project
 ========================
 Here LG Optimus Me device folder for build Cyanogenmod 9, Android 4.0.4
