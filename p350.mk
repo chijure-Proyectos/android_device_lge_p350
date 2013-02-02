@@ -114,7 +114,7 @@ PRODUCT_PACKAGES += \
 # Other
 PRODUCT_PACKAGES += \
     librs_jni \
-    camera.msm7x27 \
+    camera.p350 \
     lights.msm7x27 \
     gps.p350 \
     lgapversion
