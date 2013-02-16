@@ -74,7 +74,7 @@ PRODUCT_PACKAGES += \
    copybit.msm7x27 \
    libtilerenderer \
    libopencorehw \
-   hwcomposer.default \
+   hwcomposer.msm7x27 \
    libqdutils \
    liboverlay
 
