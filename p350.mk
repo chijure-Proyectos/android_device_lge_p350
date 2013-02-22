@@ -158,9 +158,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
     media.stagefright.enable-aac=true \
     media.stagefright.enable-qcp=true
 
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.pcm.version=2.0.1
-
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
 
 PRODUCT_DEVICE := p350
