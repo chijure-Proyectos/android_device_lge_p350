@@ -52,7 +52,6 @@ TARGET_USES_GENLOCK := true
 TARGET_USE_OVERLAY := false
 TARGET_HAVE_BYPASS := false
 USE_OPENGL_RENDERER := true
-TARGET_NO_HW_VSYNC := true
 TARGET_BOARD_PLATFORM_GPU := qcom-adreno200
 BOARD_EGL_CFG := device/lge/p350/configs/egl.cfg
 
