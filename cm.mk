@@ -11,14 +11,12 @@ $(call inherit-product, vendor/cm/config/gsm.mk)
 # Inherit some common cm stuff.
 $(call inherit-product, vendor/cm/config/common_mini_phone.mk)
 
-
 ## Device identifier. This must come after all inclusions
 PRODUCT_BUILD_PROP_OVERRIDES += \
+    PRODUCT_NAME=cm_p350 \
     BUILD_DISPLAY_ID=JZO54K \
     BUILD_FINGERPRINT="lge/pecan/pecan:4.1.2/JZO54K/299849:user/release-keys" \
     PRIVATE_BUILD_DESC="pecan-user 4.1.2 JZO54K 299849 release-keys"
-
-TARGET_NO_LIVEWALLPAPERS := true
 
 PRODUCT_NAME := cm_p350
 PRODUCT_BRAND := lge
