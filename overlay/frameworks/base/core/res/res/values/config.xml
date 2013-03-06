@@ -33,8 +33,6 @@ the blur effect where it isn't worth the performance hit. -->
          rotations as the default behavior. -->
     <bool name="config_allowAllRotations">true</bool>
 
-    <string name="config_legacyUmsLunFile">/sys/devices/platform/msm_hsusb/gadget/lun0/file</string>
-
     <!--
 The 2d accelerator can't do an alpha transformation of
 a surface with an alpha channel, so enable this special mode
@@ -84,11 +82,13 @@ does not require auto-restore. -->
     </string-array>
     <bool name="config_disableMenuKeyInLockScreen">true</bool>
     <bool name="config_automatic_brightness_available">false</bool>
+
     <!-- List of regexpressions describing the interface (if any) that represent tetherable
 USB interfaces. If the device doesn't want to support tething over USB this should
 be empty. An example would be "usb.*" -->
     <string-array translatable="false" name="config_tether_usb_regexs">
-        <item>"usb.*"</item>
+        <item>"rndis\\d"</item>	
+        <item>"usb\\d"</item>	
     </string-array>
 
     <string-array translatable="false" name="config_tether_wifi_regexs">
