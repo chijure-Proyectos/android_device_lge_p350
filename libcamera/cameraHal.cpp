@@ -433,19 +433,22 @@ CameraHAL_FixupParams(android::CameraParameters &settings)
    settings.set(android::CameraParameters::KEY_VIDEO_FRAME_FORMAT,
                 android::CameraParameters::PIXEL_FORMAT_YUV420SP);
 
-#if 0
+
    if (!settings.get(android::CameraParameters::KEY_SUPPORTED_PREVIEW_SIZES)) {
       settings.set(android::CameraParameters::KEY_SUPPORTED_PREVIEW_SIZES,
                    preview_sizes);
    }
-
+#if 0
    if (!settings.get(android::CameraParameters::KEY_SUPPORTED_VIDEO_SIZES)) {
       settings.set(android::CameraParameters::KEY_SUPPORTED_VIDEO_SIZES,
                    video_sizes);
    }
-
-   if (!settings.get(android::CameraParameters::KEY_VIDEO_SIZE)) {
-      settings.set(android::CameraParameters::KEY_VIDEO_SIZE, preferred_size);
+#endif
+    if (!settings.get(android::CameraParameters::KEY_VIDEO_SIZE)) {
+      settings.set("record-size", preferred_size);
+       settings.set(android::CameraParameters::KEY_VIDEO_SIZE, preferred_size);
+   } else {
+      settings.set("record-size", settings.get(android::CameraParameters::KEY_VIDEO_SIZE));
    }
 
    if (!settings.get(android::CameraParameters::KEY_PREFERRED_PREVIEW_SIZE_FOR_VIDEO)) {
@@ -468,7 +471,16 @@ CameraHAL_FixupParams(android::CameraParameters &settings)
       settings.set(android::CameraParameters::KEY_SUPPORTED_PREVIEW_FPS_RANGE,
                    frame_rate_range);
    }
-#endif
+
+   if (!settings.get(android::CameraParameters::KEY_HORIZONTAL_VIEW_ANGLE)) {
+      settings.set(android::CameraParameters::KEY_HORIZONTAL_VIEW_ANGLE,
+                   preferred_horizontal_viewing_angle);
+   }
+
+   if (!settings.get(android::CameraParameters::KEY_VERTICAL_VIEW_ANGLE)) {
+      settings.set(android::CameraParameters::KEY_VERTICAL_VIEW_ANGLE,
+                   preferred_vertical_viewing_angle);
+   }
 }
 
 /* Hardware Camera interface handlers. */
@@ -740,6 +752,9 @@ camera_device_close(hw_device_t* device)
    return rc;
 }
 
+void sighandle(int s){
+  //abort();
+}
 
 int
 qcamera_device_open(const hw_module_t* module, const char* name, 
@@ -748,6 +763,7 @@ qcamera_device_open(const hw_module_t* module, const char* name,
 
    void *libcameraHandle;
    int cameraId = atoi(name);
+   signal(SIGFPE,(*sighandle));   
 
    LOGD("qcamera_device_open: name:%s device:%p cameraId:%d\n", 
         name, device, cameraId);
