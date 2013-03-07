@@ -127,8 +127,6 @@ PRODUCT_PACKAGES += \
 
 # Battery life hacks
 PRODUCT_PROPERTY_OVERRIDES += \
-    # Turn off RIL when not needed
-    ro.ril.disable.power.collapse=1
     # Better sleep system
     pm.sleep_mode=1
     # Scan for WiFi less often to increase batery life
