@@ -81,6 +81,10 @@ PRODUCT_PACKAGES += \
    libqdutils \
    liboverlay
 
+# Power HALS
+PRODUCT_PACKAGES += \
+    power.p350
+
 # Audio
 PRODUCT_PACKAGES += \
     audio_policy.p350 \
@@ -114,10 +118,11 @@ PRODUCT_PACKAGES += \
     gps.p350 \
     lgapversion
 
+# Misc
 PRODUCT_PACKAGES += \
     hcitool \
     hciconfig \
-    hwaddrs
+    hwaddrs 
 
 
 PRODUCT_PROPERTY_OVERRIDES += \
