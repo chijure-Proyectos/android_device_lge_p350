@@ -234,9 +234,7 @@ CameraHAL_HandlePreviewData(const android::sp<android::IMemory>& dataPtr,
            (unsigned)offset, size, mHeap != NULL ? mHeap->base() : 0);
 
       mWindow->set_usage(mWindow,
-//#ifndef HWA
                          GRALLOC_USAGE_PMEM_PRIVATE_ADSP |
-//#endif
                          GRALLOC_USAGE_SW_READ_OFTEN);
       retVal = mWindow->set_buffers_geometry(mWindow,
                                              previewWidth, previewHeight,
@@ -396,7 +394,7 @@ CameraHAL_FixupParams(android::CameraParameters &settings)
    const char *video_sizes =
       "640x480,384x288,352x288,320x240,240x160,176x144";
    const char *preferred_size       = "320x240";
-   const char *preview_frame_rates  = "25,24,15";
+   const char *preview_frame_rates  = "10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30";
    const char *preferred_frame_rate = "15";
    const char *frame_rate_range     = "(10,25)";
    const char *preferred_horizontal_viewing_angle = "51.2";
@@ -410,13 +408,6 @@ CameraHAL_FixupParams(android::CameraParameters &settings)
       settings.set(android::CameraParameters::KEY_SUPPORTED_PREVIEW_SIZES,
                    preview_sizes);
    }
-
-#if 0
-   if (!settings.get(android::CameraParameters::KEY_SUPPORTED_VIDEO_SIZES)) {
-      settings.set(android::CameraParameters::KEY_SUPPORTED_VIDEO_SIZES,
-                   video_sizes);
-   }
-#endif
 
    if (!settings.get(android::CameraParameters::KEY_VIDEO_SIZE)) {
       settings.set(android::CameraParameters::KEY_VIDEO_SIZE, preferred_size);
@@ -565,12 +556,7 @@ int
 qcamera_start_recording(struct camera_device * device)
 {
    ALOGV("qcamera_start_recording\n");
-/*
-   if (qcamera_preview_enabled(device)){
-       ALOGD("Preview was enabled");
-       qcamera_stop_preview(device);
-   }
-*/
+
    qCamera->enableMsgType(CAMERA_MSG_VIDEO_FRAME);
    qCamera->startRecording();
 
@@ -584,9 +570,7 @@ qcamera_stop_recording(struct camera_device * device)
 
    qCamera->disableMsgType(CAMERA_MSG_VIDEO_FRAME);
    qCamera->stopRecording();
-/*
-   qcamera_start_preview(device);
-*/
+
 }
 
 int
